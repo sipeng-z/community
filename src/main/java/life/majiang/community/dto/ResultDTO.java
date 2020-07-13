@@ -3,11 +3,12 @@ package life.majiang.community.dto;
 import life.majiang.community.exception.CustomizeErrorCode;
 import life.majiang.community.exception.CustomizeException;
 
-public class ResultDTO {
+import java.util.List;
+
+public class ResultDTO<T> {
     private Integer code;
     private String message;
-
-
+    private T data;
 
     public Integer getCode() {
         return code;
@@ -23,6 +24,14 @@ public class ResultDTO {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 
     @Override
@@ -51,5 +60,13 @@ public class ResultDTO {
     }
     public static ResultDTO errorOf(CustomizeException e){
         return errorOf(e.getCode(),e.getMessage());
+    }
+
+    public static <T> ResultDTO okOf(T t){
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("请求成功");
+        resultDTO.setData(t);
+        return resultDTO;
     }
 }
